@@ -1,17 +1,31 @@
-# geo-datasets
 
+## Malaria Atlas - PF Incidence Dataset
 
-## Overview:
+Data from [Malaria Atlas Project](https://data.malariaatlas.org)
 
-each dataset directory should contain
+To run:
+1.  If on HPC (vortex-alpha nodes), prepare modules and base environment
+```
+source "/opt/anaconda3-2021.05/etc/profile.d/conda.csh"
+module unload gcc/4.7.3 python/2.7.8 openmpi-1.10.0-gcc mpi4py-2.0.0-gcc acml/5.3.1 numpy/1.9.2 gdal-nograss/1.11.2 proj/4.7.0 geos/3.5.0
+module load gcc/9.3.0 openmpi/3.1.4/gcc-9.3.0 anaconda3/2021.05
+```
 
-- a readme detailing **all** the steps needed to reproduce from scratch. This may include a download script or instructions on how to manually download, instructions for running any processing scripts and/or step by step instructions for any manual processing, as well as any other relevant information about the dataset and processing (caveats, notes, suggested usage, etc.)
-- all scripts used to produce data
-- ingest json prepared according to standard format used by geo framework (see existing datasets for examples)
+2. Create Conda environment (if does not exist yet):
+```
+conda create -n va_geo python=3.9 -c conda-forge
+conda activate va_geo
+conda install -c conda-forge rasterio pandas geopandas shapely fiona pyproj requests prefect prefect-dask dask-jobqueue
+```
 
+3. Load Conda environment:
+```
+conda activate va_geo
+```
 
-## Preparing data on SciClone:
+4. Update config options in `main.py`
 
-all raw data should be initially downloaded into the `/sciclone/aiddata10/REU/pre_geo/raw` directory and processing should output to the `/sciclone/aiddata10/REU/pre_geo/data` directory
-
-after code review, testing, quality assurance steps data will be moved the `raw` and `data` directories within `/sciclone/aiddata10/REU/pre_geo` to their respective directories in `/sciclone/aiddata10/REU/geo` for ingest into the geo framework
+5. Run `main.py`:
+```
+ python main.py
+```
